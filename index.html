@@ -1,0 +1,1882 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>صانع الأختام المخصص عالي الدقة | Custom Ultra-HD Stamp Generator</title>
+    <meta name="description" content="أداة متقدمة لتصميم وتوليد أختام الشركات والمؤسسات الرسمية بدقة فيكتور فائقة الوضوح (Ultra HD 300 DPI) مع دعم كامل للغة العربية والإنجليزية وتصدير SVG و PNG." />
+    <meta property="og:title" content="صانع الأختام المخصص عالي الدقة" />
+    <meta property="og:description" content="أداة متقدمة لتصميم وتوليد أختام الشركات والمؤسسات الرسمية بدقة فيكتور فائقة الوضوح مع دعم كامل للغة العربية والإنجليزية." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Google Fonts: Cairo, Tajawal & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@400;500;700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet" />
+
+    <style>
+      /* --- Base Reset & Typography --- */
+      *, *::before, *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --font-ui: 'Cairo', 'Tajawal', 'Plus Jakarta Sans', system-ui, sans-serif;
+        --font-stamp: 'Cairo', 'Tajawal', system-ui, -apple-system, sans-serif;
+        --color-bg: #f8fafc;
+        --color-surface: #ffffff;
+        --color-border: #e2e8f0;
+        --color-text-main: #0f172a;
+        --color-text-muted: #64748b;
+        --color-primary: #0f2b5c;
+        --color-primary-hover: #0a1e40;
+        --color-danger: #dc2626;
+        --color-danger-bg: #fef2f2;
+      }
+
+      body {
+        font-family: var(--font-ui);
+        background-color: var(--color-bg);
+        color: var(--color-text-main);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+      }
+
+      /* --- Top Navigation Header --- */
+      .site-header {
+        background-color: var(--color-surface);
+        border-bottom: 1px solid var(--color-border);
+        padding: 0.875rem 1.5rem;
+        position: sticky;
+        top: 0;
+        z-index: 20;
+      }
+
+      .header-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1.5rem;
+      }
+
+      .brand-lockup {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        text-decoration: none;
+        color: var(--color-text-main);
+      }
+
+      .brand-icon {
+        width: 34px;
+        height: 34px;
+        color: var(--color-primary);
+        flex-shrink: 0;
+      }
+
+      .brand-title-wrap {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .brand-title {
+        font-size: 1.125rem;
+        font-weight: 800;
+        letter-spacing: -0.01em;
+        white-space: nowrap;
+        color: #0f172a;
+        line-height: 1.2;
+      }
+
+      .brand-subtitle {
+        font-size: 0.75rem;
+        color: #64748b;
+        font-weight: 600;
+      }
+
+      .header-features {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        font-size: 0.8125rem;
+        color: var(--color-text-muted);
+        font-weight: 600;
+      }
+
+      .feature-item {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.375rem;
+      }
+
+      .dot-divider {
+        color: #cbd5e1;
+      }
+
+      /* --- App Container & Layout --- */
+      .main-content {
+        flex: 1;
+        max-width: 1400px;
+        width: 100%;
+        margin: 0 auto;
+        padding: 1.5rem 1rem 3rem;
+      }
+
+      .workspace-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      @media (min-width: 1024px) {
+        .workspace-grid {
+          grid-template-columns: 500px 1fr;
+          align-items: start;
+          gap: 2rem;
+        }
+      }
+
+      /* --- Panels --- */
+      .panel-card {
+        background-color: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: 0.875rem;
+        padding: 1.5rem;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04);
+      }
+
+      .section-heading {
+        font-size: 1.05rem;
+        font-weight: 800;
+        margin-bottom: 1.25rem;
+        color: var(--color-text-main);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .form-group {
+        margin-bottom: 1.25rem;
+      }
+
+      .form-label {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 0.84rem;
+        font-weight: 700;
+        color: #1e293b;
+        margin-bottom: 0.4rem;
+      }
+
+      .form-label .required-star {
+        color: var(--color-danger);
+        margin-right: 0.25rem;
+      }
+
+      .label-en {
+        font-size: 0.72rem;
+        color: var(--color-text-muted);
+        font-weight: 500;
+      }
+
+      .input-wrapper {
+        position: relative;
+      }
+
+      .text-input {
+        width: 100%;
+        padding: 0.6875rem 0.875rem;
+        font-size: 0.9375rem;
+        font-family: inherit;
+        border: 1.5px solid #cbd5e1;
+        border-radius: 0.5rem;
+        background-color: #ffffff;
+        color: var(--color-text-main);
+        transition: border-color 0.15s ease, box-shadow 0.15s ease;
+      }
+
+      .text-input:focus {
+        outline: none;
+        border-color: #2563eb;
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+      }
+
+      .text-input.input-error {
+        border-color: var(--color-danger);
+        background-color: #fffbfb;
+      }
+
+      .text-input.input-error:focus {
+        box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.15);
+      }
+
+      .input-hint {
+        font-size: 0.75rem;
+        color: var(--color-text-muted);
+        margin-top: 0.3rem;
+      }
+
+      .error-message {
+        display: none;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--color-danger);
+        margin-top: 0.375rem;
+        align-items: center;
+        gap: 0.375rem;
+      }
+
+      .error-message.visible {
+        display: flex;
+      }
+
+      /* --- Shape Selector Buttons --- */
+      .shape-grid {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 0.5rem;
+      }
+
+      .shape-btn {
+        background-color: #f8fafc;
+        border: 1.5px solid #e2e8f0;
+        border-radius: 0.625rem;
+        padding: 0.625rem 0.25rem;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.375rem;
+        transition: all 0.15s ease;
+        font-family: inherit;
+      }
+
+      .shape-btn:hover {
+        background-color: #f1f5f9;
+        border-color: #cbd5e1;
+      }
+
+      .shape-btn.active {
+        background-color: #eff6ff;
+        border-color: #2563eb;
+        color: #1d4ed8;
+        box-shadow: 0 1px 3px rgba(37, 99, 235, 0.1);
+      }
+
+      .shape-icon {
+        width: 26px;
+        height: 26px;
+        stroke: currentColor;
+        stroke-width: 1.85;
+        fill: none;
+      }
+
+      .shape-label {
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-align: center;
+        line-height: 1.2;
+      }
+
+      /* --- Appearance Options --- */
+      .color-options {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .color-swatch-btn {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        border: 2px solid transparent;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
+      }
+
+      .color-swatch-btn:hover {
+        transform: scale(1.1);
+      }
+
+      .color-swatch-btn.active {
+        box-shadow: 0 0 0 2px #ffffff, 0 0 0 4.5px #2563eb;
+      }
+
+      .custom-color-input {
+        width: 34px;
+        height: 34px;
+        padding: 0;
+        border: 1.5px solid #cbd5e1;
+        border-radius: 50%;
+        cursor: pointer;
+        background: transparent;
+      }
+
+      .slider-row {
+        display: flex;
+        align-items: center;
+        gap: 0.875rem;
+      }
+
+      .range-slider {
+        flex: 1;
+        accent-color: var(--color-primary);
+        cursor: pointer;
+        height: 6px;
+      }
+
+      .slider-value {
+        font-size: 0.8125rem;
+        font-weight: 700;
+        font-variant-numeric: tabular-nums;
+        color: var(--color-text-main);
+        min-width: 44px;
+        text-align: left;
+        direction: ltr;
+      }
+
+      /* Mode Tabs for Clarity / Ink Style */
+      .clarity-tabs {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.375rem;
+        background-color: #f1f5f9;
+        padding: 0.25rem;
+        border-radius: 0.5rem;
+      }
+
+      .clarity-tab-btn {
+        padding: 0.45rem 0.5rem;
+        font-size: 0.75rem;
+        font-weight: 700;
+        border: none;
+        background: transparent;
+        border-radius: 0.375rem;
+        cursor: pointer;
+        color: #475569;
+        font-family: inherit;
+        transition: all 0.15s ease;
+      }
+
+      .clarity-tab-btn:hover {
+        color: #0f172a;
+      }
+
+      .clarity-tab-btn.active {
+        background-color: #ffffff;
+        color: #0f2b5c;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      }
+
+      /* Quality / DPI Select */
+      .select-input {
+        width: 100%;
+        padding: 0.5rem 0.75rem;
+        font-size: 0.8125rem;
+        font-weight: 600;
+        font-family: inherit;
+        border: 1.5px solid #cbd5e1;
+        border-radius: 0.5rem;
+        background-color: #ffffff;
+        color: var(--color-text-main);
+        cursor: pointer;
+      }
+
+      /* --- Action Buttons --- */
+      .action-buttons-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.75rem;
+        margin-top: 1.5rem;
+      }
+
+      .btn {
+        padding: 0.75rem 1rem;
+        font-size: 0.875rem;
+        font-weight: 700;
+        font-family: inherit;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        transition: all 0.15s ease;
+        border: 1.5px solid transparent;
+        white-space: nowrap;
+      }
+
+      .btn-primary {
+        background-color: var(--color-primary);
+        color: #ffffff;
+      }
+
+      .btn-primary:hover:not(:disabled) {
+        background-color: var(--color-primary-hover);
+        box-shadow: 0 2px 6px rgba(15, 43, 92, 0.25);
+      }
+
+      .btn-secondary {
+        background-color: #eff6ff;
+        color: #1e40af;
+        border-color: #bfdbfe;
+      }
+
+      .btn-secondary:hover:not(:disabled) {
+        background-color: #dbeafe;
+      }
+
+      .btn-outline {
+        background-color: transparent;
+        color: #475569;
+        border-color: #cbd5e1;
+      }
+
+      .btn-outline:hover:not(:disabled) {
+        background-color: #f8fafc;
+        color: #0f172a;
+      }
+
+      .btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        pointer-events: none;
+      }
+
+      .btn-full {
+        grid-column: span 2;
+      }
+
+      /* --- Right Panel: Live Preview --- */
+      .preview-panel {
+        background-color: var(--color-surface);
+        border: 1px solid var(--color-border);
+        border-radius: 0.875rem;
+        padding: 1.5rem;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04);
+        position: sticky;
+        top: 4.5rem;
+      }
+
+      .preview-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+      }
+
+      .preview-title-group {
+        display: flex;
+        align-items: baseline;
+        gap: 0.625rem;
+      }
+
+      .preview-title {
+        font-size: 1.05rem;
+        font-weight: 800;
+      }
+
+      .preview-badge {
+        font-size: 0.75rem;
+        color: #2563eb;
+        background-color: #eff6ff;
+        padding: 0.15rem 0.5rem;
+        border-radius: 0.25rem;
+        font-weight: 700;
+      }
+
+      .preview-controls-right {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .zoom-control {
+        display: flex;
+        align-items: center;
+        background-color: #f1f5f9;
+        padding: 0.1875rem;
+        border-radius: 0.375rem;
+        gap: 0.25rem;
+      }
+
+      .zoom-btn {
+        padding: 0.2rem 0.5rem;
+        font-size: 0.72rem;
+        font-weight: 700;
+        background: transparent;
+        border: none;
+        border-radius: 0.25rem;
+        color: #475569;
+        cursor: pointer;
+        font-family: inherit;
+      }
+
+      .zoom-btn.active {
+        background-color: #ffffff;
+        color: #0f172a;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+      }
+
+      .preview-modes {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+        background-color: #f1f5f9;
+        padding: 0.1875rem;
+        border-radius: 0.375rem;
+      }
+
+      .preview-mode-btn {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.72rem;
+        font-weight: 700;
+        background: transparent;
+        border: none;
+        border-radius: 0.25rem;
+        color: #64748b;
+        cursor: pointer;
+        font-family: inherit;
+      }
+
+      .preview-mode-btn.active {
+        background-color: #ffffff;
+        color: #0f172a;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+      }
+
+      /* Stamp Viewport Area */
+      .stamp-viewport {
+        width: 100%;
+        min-height: 480px;
+        border-radius: 0.625rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+        transition: background-color 0.2s ease;
+        padding: 1.5rem;
+        border: 1px solid #e2e8f0;
+      }
+
+      .stamp-viewport.mode-paper {
+        background-color: #ffffff;
+        background-image: 
+          radial-gradient(#e2e8f0 0.85px, transparent 0.85px),
+          radial-gradient(#e2e8f0 0.85px, #ffffff 0.85px);
+        background-size: 20px 20px;
+        background-position: 0 0, 10px 10px;
+        box-shadow: inset 0 1px 4px rgba(0,0,0,0.02);
+      }
+
+      .stamp-viewport.mode-transparent {
+        background-color: #ffffff;
+        background-image: 
+          linear-gradient(45deg, #f1f5f9 25%, transparent 25%),
+          linear-gradient(-45deg, #f1f5f9 25%, transparent 25%),
+          linear-gradient(45deg, transparent 75%, #f1f5f9 75%),
+          linear-gradient(-45deg, transparent 75%, #f1f5f9 75%);
+        background-size: 16px 16px;
+        background-position: 0 0, 0 8px, 8px -8px, -8px 0px;
+      }
+
+      .stamp-viewport.mode-dark {
+        background-color: #0f172a;
+      }
+
+      /* SVG Stamp Container */
+      .svg-scale-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        width: 100%;
+        height: 100%;
+      }
+
+      #stamp-svg {
+        max-width: 100%;
+        max-height: 450px;
+        width: auto;
+        height: auto;
+        filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.06));
+        transition: transform 0.2s ease;
+        /* Geometric precision rendering for maximum clarity */
+        shape-rendering: geometricPrecision;
+        text-rendering: geometricPrecision;
+      }
+
+      .stamp-meta-bar {
+        margin-top: 1rem;
+        padding-top: 0.75rem;
+        border-top: 1px solid var(--color-border);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 0.78rem;
+        color: var(--color-text-muted);
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .meta-item {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.375rem;
+      }
+
+      .status-valid {
+        color: #15803d;
+        font-weight: 700;
+      }
+
+      .status-invalid {
+        color: var(--color-danger);
+        font-weight: 700;
+      }
+
+      /* Hidden canvas for high-DPI export */
+      #export-canvas {
+        display: none;
+      }
+
+      /* Quality badge */
+      .quality-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        background-color: #ecfdf5;
+        color: #047857;
+        padding: 0.15rem 0.5rem;
+        border-radius: 0.25rem;
+        font-size: 0.72rem;
+        font-weight: 700;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header class="site-header">
+      <div class="header-container">
+        <a href="#" class="brand-lockup">
+          <svg class="brand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <circle cx="12" cy="12" r="6"></circle>
+            <path d="m9 12 2 2 4-4"></path>
+          </svg>
+          <div class="brand-title-wrap">
+            <span class="brand-title">صانع الأختام الرسمي عالي الدقة</span>
+            <span class="brand-subtitle">Official Ultra-HD Stamp Studio · 300 DPI Export</span>
+          </div>
+        </a>
+
+        <div class="header-features">
+          <div class="feature-item">
+            <span class="quality-badge">فيكتور فائق الوضوح Vector HD</span>
+          </div>
+          <span class="dot-divider">/</span>
+          <div class="feature-item">
+            <span>دقة طباعة 300 DPI</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="main-content">
+      <div class="workspace-grid">
+        <!-- Configuration Form (Left Panel) -->
+        <section class="panel-card" aria-label="Stamp Configuration">
+          <div class="section-heading">
+            <span>بيانات وتخصيص الختم</span>
+            <button type="button" id="load-sample-btn" class="btn btn-outline" style="padding: 0.3rem 0.75rem; font-size: 0.75rem;">
+              نموذج جاهز (Sample)
+            </button>
+          </div>
+
+          <form id="stamp-form" novalidate onsubmit="return false;">
+            <!-- Shape Selection -->
+            <div class="form-group">
+              <label class="form-label">
+                <span>شكل الختم (Stamp Shape)</span>
+              </label>
+              <div class="shape-grid" role="radiogroup" aria-label="اختيار شكل الختم">
+                <button type="button" class="shape-btn active" data-shape="circle" aria-label="دائري Circle">
+                  <svg class="shape-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle></svg>
+                  <span class="shape-label">دائري</span>
+                </button>
+                <button type="button" class="shape-btn" data-shape="oval" aria-label="بيضاوي Oval">
+                  <svg class="shape-icon" viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="10" ry="7"></ellipse></svg>
+                  <span class="shape-label">بيضاوي</span>
+                </button>
+                <button type="button" class="shape-btn" data-shape="square" aria-label="مربع Square">
+                  <svg class="shape-icon" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18"></rect></svg>
+                  <span class="shape-label">مربع</span>
+                </button>
+                <button type="button" class="shape-btn" data-shape="rectangle" aria-label="مستطيل Rectangle">
+                  <svg class="shape-icon" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14"></rect></svg>
+                  <span class="shape-label">مستطيل</span>
+                </button>
+                <button type="button" class="shape-btn" data-shape="rounded-square" aria-label="مربع منحني Rounded">
+                  <svg class="shape-icon" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"></rect></svg>
+                  <span class="shape-label">منحني</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Company Name Input -->
+            <div class="form-group">
+              <label for="company-name" class="form-label">
+                <span>اسم الشركة أو المؤسسة <span class="required-star">*</span></span>
+                <span class="label-en">Company / Institution Name</span>
+              </label>
+              <div class="input-wrapper">
+                <input 
+                  type="text" 
+                  id="company-name" 
+                  name="company-name"
+                  class="text-input" 
+                  dir="auto"
+                  placeholder="مثال: شركة النور للتجارة والمقاولات | Al-Noor Trading Co." 
+                  autocomplete="organization"
+                  required
+                />
+              </div>
+              <div class="input-hint">يدعم العربية والإنجليزية تلقائياً مع محاذاة دقيقة للنصوص المنحنية والمستقيمة.</div>
+              <div id="company-name-error" class="error-message" role="alert">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                <span>اسم الشركة أو المؤسسة مطلوب ولا يمكن تركه فارغاً.</span>
+              </div>
+            </div>
+
+            <!-- Tax Number Input -->
+            <div class="form-group">
+              <label for="tax-number" class="form-label">
+                <span>الرقم الضريبي (أرقام فقط) <span class="required-star">*</span></span>
+                <span class="label-en">Tax Number (Digits Only)</span>
+              </label>
+              <div class="input-wrapper">
+                <input 
+                  type="text" 
+                  id="tax-number" 
+                  name="tax-number"
+                  class="text-input" 
+                  inputmode="numeric"
+                  dir="ltr"
+                  placeholder="300123456789003" 
+                  required
+                />
+              </div>
+              <div class="input-hint">يجب أن يتكون من أرقام فقط (0–9) دون أحرف أو مسافات.</div>
+              <div id="tax-number-error" class="error-message" role="alert">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                <span id="tax-error-text">الرقم الضريبي مطلوب ويجب أن يحتوي على أرقام فقط.</span>
+              </div>
+            </div>
+
+            <!-- Commercial Register Number Input -->
+            <div class="form-group">
+              <label for="cr-number" class="form-label">
+                <span>رقم السجل التجاري (أرقام فقط) <span class="required-star">*</span></span>
+                <span class="label-en">Commercial Register (Digits Only)</span>
+              </label>
+              <div class="input-wrapper">
+                <input 
+                  type="text" 
+                  id="cr-number" 
+                  name="cr-number"
+                  class="text-input" 
+                  inputmode="numeric"
+                  dir="ltr"
+                  placeholder="1010567890" 
+                  required
+                />
+              </div>
+              <div class="input-hint">يجب أن يتكون من أرقام فقط (0–9) دون أحرف أو مسافات.</div>
+              <div id="cr-number-error" class="error-message" role="alert">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                <span id="cr-error-text">رقم السجل التجاري مطلوب ويجب أن يحتوي على أرقام فقط.</span>
+              </div>
+            </div>
+
+            <!-- Clarity & Sharpness Style -->
+            <div class="form-group">
+              <label class="form-label">
+                <span>وضوح الختم والمظهر (Clarity &amp; Ink Style)</span>
+                <span class="label-en">Ultra-Sharp vs. Natural</span>
+              </label>
+              <div class="clarity-tabs" role="tablist">
+                <button type="button" class="clarity-tab-btn active" data-mode="ultra" title="فيكتور فائق الدقة بدون أي تشويش">
+                  فائق الوضوح (HD)
+                </button>
+                <button type="button" class="clarity-tab-btn" data-mode="subtle" title="أثر حبر خفيف وطبيعي مع بقاء الخط واضحاً">
+                  حبر طبيعي (Ink)
+                </button>
+                <button type="button" class="clarity-tab-btn" data-mode="vintage" title="تأثير الختم اليدوي الكلاسيكي">
+                  ختم كلاسيكي (Stamp)
+                </button>
+              </div>
+            </div>
+
+            <!-- Font Boldness & Legibility -->
+            <div class="form-group">
+              <div class="form-label">
+                <span>سماكة ووضوح الخط (Font Weight)</span>
+                <span id="font-weight-val" class="slider-value">عريض جداً (800)</span>
+              </div>
+              <div class="slider-row">
+                <input type="range" id="font-weight-slider" class="range-slider" min="600" max="900" value="800" step="100" />
+              </div>
+            </div>
+
+            <!-- Border Thickness Slider -->
+            <div class="form-group">
+              <div class="form-label">
+                <span>سماكة الإطار الخارجي والداخلي (Border Thickness)</span>
+                <span id="border-thickness-val" class="slider-value">4.5px</span>
+              </div>
+              <div class="slider-row">
+                <input type="range" id="border-thickness" class="range-slider" min="2.5" max="9" value="4.5" step="0.5" />
+              </div>
+            </div>
+
+            <!-- Ink Color Selection -->
+            <div class="form-group">
+              <label class="form-label">
+                <span>لون حبر الختم (Ink Color)</span>
+                <span class="label-en">Official Inks</span>
+              </label>
+              <div class="color-options">
+                <button type="button" class="color-swatch-btn active" data-color="#0f2b5c" style="background-color: #0f2b5c;" title="أزرق رسمي داكن (Default)"></button>
+                <button type="button" class="color-swatch-btn" data-color="#0c2340" style="background-color: #0c2340;" title="كحلي ملكي عميق"></button>
+                <button type="button" class="color-swatch-btn" data-color="#1e3a8a" style="background-color: #1e3a8a;" title="أزرق زاهي"></button>
+                <button type="button" class="color-swatch-btn" data-color="#111827" style="background-color: #111827;" title="أسود كربوني رسمي"></button>
+                <button type="button" class="color-swatch-btn" data-color="#991b1b" style="background-color: #991b1b;" title="أحمر توثيقي قرمزي"></button>
+                <button type="button" class="color-swatch-btn" data-color="#14532d" style="background-color: #14532d;" title="أخضر زمردي رسمي"></button>
+                <button type="button" class="color-swatch-btn" data-color="#581c87" style="background-color: #581c87;" title="بنفسجي ملكي"></button>
+                <label style="display: inline-flex; align-items: center; gap: 0.35rem; font-size: 0.75rem; color: var(--color-text-muted); cursor: pointer; margin-right: 0.25rem;">
+                  <input type="color" id="custom-color-picker" class="custom-color-input" value="#0f2b5c" title="اختر لوناً مخصصاً" />
+                  <span>مخصص</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Export DPI Quality Setting -->
+            <div class="form-group">
+              <label for="export-dpi-select" class="form-label">
+                <span>دقة تصدير صورة PNG (Export Resolution)</span>
+                <span class="label-en">Ultra-HD Scale</span>
+              </label>
+              <select id="export-dpi-select" class="select-input">
+                <option value="4" selected>فائقة الوضوح 300 DPI Ultra-HD (2000 &times; 2000 بكسل) - الأفضل للطباعة</option>
+                <option value="6">دقة قصوى 600 DPI Master Print (3000 &times; 3000 بكسل)</option>
+                <option value="2.5">دقة قياسية Standard (1250 &times; 1250 بكسل) - للمواقع والمستندات الرقمية</option>
+              </select>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons-grid">
+              <button type="button" id="download-png-btn" class="btn btn-primary" title="تحميل صورة PNG عالية الدقة بخلفية شفافة">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                تحميل PNG عالي الدقة
+              </button>
+
+              <button type="button" id="download-svg-btn" class="btn btn-secondary" title="تحميل فيكتور SVG مفتوح المصدر بدقة لانهائية">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                تحميل SVG فيكتور
+              </button>
+
+              <button type="button" id="reset-btn" class="btn btn-outline btn-full">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+                إعادة تعيين الحقول (Reset)
+              </button>
+            </div>
+          </form>
+        </section>
+
+        <!-- Live Preview (Right Panel) -->
+        <section class="preview-panel" aria-label="Live Preview">
+          <div class="preview-header">
+            <div class="preview-title-group">
+              <h2 class="preview-title">معاينة الختم المباشرة</h2>
+              <span id="shape-indicator" class="preview-badge">دائري</span>
+            </div>
+
+            <div class="preview-controls-right">
+              <!-- Zoom Control -->
+              <div class="zoom-control" role="group" aria-label="مستوى التكبير">
+                <button type="button" class="zoom-btn" data-zoom="0.85">85%</button>
+                <button type="button" class="zoom-btn active" data-zoom="1.0">100%</button>
+                <button type="button" class="zoom-btn" data-zoom="1.25">125%</button>
+                <button type="button" class="zoom-btn" data-zoom="1.5">150%</button>
+              </div>
+
+              <!-- Background Mode -->
+              <div class="preview-modes" role="group" aria-label="خلفية المعاينة">
+                <button type="button" class="preview-mode-btn active" data-bg="paper" title="خلفية ورقة رسمية">ورقة</button>
+                <button type="button" class="preview-mode-btn" data-bg="transparent" title="مربعات الشفافية">شفاف</button>
+                <button type="button" class="preview-mode-btn" data-bg="dark" title="خلفية داكنة">داكن</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Stamp Viewport Container -->
+          <div id="stamp-viewport" class="stamp-viewport mode-paper">
+            <div id="svg-scale-wrapper" class="svg-scale-wrapper">
+              <!-- SVG Stamp Generated Live -->
+              <svg 
+                id="stamp-svg" 
+                xmlns="http://www.w3.org/2000/svg" 
+                viewBox="0 0 500 500" 
+                role="img" 
+                aria-label="معاينة الختم المخصص عالي الدقة"
+              >
+                <!-- Embedded Font Styling & SVG Filter Engine -->
+                <defs id="svg-defs">
+                  <style>
+                    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&amp;family=Tajawal:wght@700;800;900&amp;display=swap');
+                    .stamp-text {
+                      font-family: 'Cairo', 'Tajawal', system-ui, -apple-system, sans-serif;
+                      user-select: none;
+                      text-rendering: geometricPrecision;
+                    }
+                  </style>
+
+                  <!-- Subtle Natural Ink Filter (Extremely refined, zero text blurring) -->
+                  <filter id="subtle-ink-filter" x="-5%" y="-5%" width="110%" height="110%">
+                    <feTurbulence type="fractalNoise" baseFrequency="0.08" numOctaves="3" result="noise" />
+                    <feDisplacementMap in="SourceGraphic" in2="noise" scale="0.9" xChannelSelector="R" yChannelSelector="G" result="roughened" />
+                    <feColorMatrix type="matrix" in="roughened" values="
+                      1 0 0 0 0
+                      0 1 0 0 0
+                      0 0 1 0 0
+                      0 0 0 0.98 0" result="final" />
+                  </filter>
+
+                  <!-- Vintage Stamp Filter -->
+                  <filter id="vintage-stamp-filter" x="-10%" y="-10%" width="120%" height="120%">
+                    <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="4" result="noise" />
+                    <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.2" xChannelSelector="R" yChannelSelector="G" result="roughened" />
+                    <feColorMatrix type="matrix" in="noise" values="
+                      1 0 0 0 0
+                      0 1 0 0 0
+                      0 0 1 0 0
+                      0 0 0 14 -7" result="porosity" />
+                    <feComposite in="roughened" in2="porosity" operator="out" result="inkBleed" />
+                    <feColorMatrix type="matrix" in="inkBleed" values="
+                      1 0 0 0 0
+                      0 1 0 0 0
+                      0 0 1 0 0
+                      0 0 0 0.94 0" result="final" />
+                  </filter>
+                </defs>
+
+                <!-- Dynamic Stamp Content Group -->
+                <g id="stamp-content-group"></g>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Metadata Footer Bar -->
+          <div class="stamp-meta-bar">
+            <div class="meta-item">
+              <span>حالة الختم:</span>
+              <span id="validation-status" class="status-valid">جاهز للتحميل بجودة كاملة</span>
+            </div>
+            <div class="meta-item" style="direction: ltr;">
+              <span id="resolution-indicator" class="quality-badge">300 DPI &middot; 2000&times;2000 px</span>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- Hidden High-DPI Canvas for PNG Generation -->
+    <canvas id="export-canvas"></canvas>
+
+    <!-- Plain Vanilla JavaScript: All Logic In One File -->
+    <script>
+      (function() {
+        'use strict';
+
+        // --- Application State ---
+        const state = {
+          companyName: 'شركة النور للتجارة والمقاولات | AL-NOOR TRADING CO.',
+          taxNumber: '300123456789003',
+          crNumber: '1010567890',
+          shape: 'circle', // circle, oval, square, rectangle, rounded-square
+          color: '#0f2b5c', // Deep rich official navy blue ink
+          borderThickness: 4.5,
+          fontWeight: 800, // 600, 700, 800, 900
+          clarityMode: 'ultra', // 'ultra' (crisp vector), 'subtle' (natural ink), 'vintage' (aged stamp)
+          exportScale: 4, // 4 = 2000px (300 DPI), 6 = 3000px (600 DPI)
+          zoomLevel: 1.0,
+          previewMode: 'paper'
+        };
+
+        // --- DOM Elements ---
+        const companyInput = document.getElementById('company-name');
+        const taxInput = document.getElementById('tax-number');
+        const crInput = document.getElementById('cr-number');
+        const companyError = document.getElementById('company-name-error');
+        const taxError = document.getElementById('tax-number-error');
+        const crError = document.getElementById('cr-number-error');
+        const taxErrorText = document.getElementById('tax-error-text');
+        const crErrorText = document.getElementById('cr-error-text');
+        const borderSlider = document.getElementById('border-thickness');
+        const borderValDisplay = document.getElementById('border-thickness-val');
+        const fontWeightSlider = document.getElementById('font-weight-slider');
+        const fontWeightVal = document.getElementById('font-weight-val');
+        const clarityTabBtns = document.querySelectorAll('.clarity-tab-btn');
+        const customColorPicker = document.getElementById('custom-color-picker');
+        const colorSwatches = document.querySelectorAll('.color-swatch-btn');
+        const shapeButtons = document.querySelectorAll('.shape-btn');
+        const downloadPngBtn = document.getElementById('download-png-btn');
+        const downloadSvgBtn = document.getElementById('download-svg-btn');
+        const resetBtn = document.getElementById('reset-btn');
+        const loadSampleBtn = document.getElementById('load-sample-btn');
+        const stampSvg = document.getElementById('stamp-svg');
+        const stampContentGroup = document.getElementById('stamp-content-group');
+        const stampViewport = document.getElementById('stamp-viewport');
+        const svgScaleWrapper = document.getElementById('svg-scale-wrapper');
+        const shapeIndicator = document.getElementById('shape-indicator');
+        const validationStatus = document.getElementById('validation-status');
+        const resolutionIndicator = document.getElementById('resolution-indicator');
+        const exportDpiSelect = document.getElementById('export-dpi-select');
+        const zoomButtons = document.querySelectorAll('.zoom-btn');
+        const previewModeButtons = document.querySelectorAll('.preview-mode-btn');
+
+        // --- XML Character Escaper ---
+        function escapeXml(unsafe) {
+          if (!unsafe) return '';
+          return unsafe.toString().replace(/[<>&'"]/g, function(c) {
+            switch (c) {
+              case '<': return '&lt;';
+              case '>': return '&gt;';
+              case '&': return '&amp;';
+              case '\'': return '&apos;';
+              case '"': return '&quot;';
+            }
+          });
+        }
+
+        // --- Detect if string contains Arabic characters ---
+        function hasArabic(text) {
+          return /[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]/.test(text || '');
+        }
+
+        // --- Real-time Validation ---
+        function validateFields() {
+          let isValid = true;
+
+          // 1. Company Name validation
+          const compVal = companyInput.value.trim();
+          if (!compVal) {
+            companyError.classList.add('visible');
+            companyInput.classList.add('input-error');
+            isValid = false;
+          } else {
+            companyError.classList.remove('visible');
+            companyInput.classList.remove('input-error');
+          }
+
+          // 2. Tax Number validation
+          const taxVal = taxInput.value.trim();
+          if (!taxVal) {
+            taxErrorText.textContent = 'الرقم الضريبي مطلوب ولا يمكن تركه فارغاً.';
+            taxError.classList.add('visible');
+            taxInput.classList.add('input-error');
+            isValid = false;
+          } else if (!/^\d+$/.test(taxVal)) {
+            taxErrorText.textContent = 'يجب إدخال أرقام فقط (0–9) بدون أحرف أو رموز.';
+            taxError.classList.add('visible');
+            taxInput.classList.add('input-error');
+            isValid = false;
+          } else {
+            taxError.classList.remove('visible');
+            taxInput.classList.remove('input-error');
+          }
+
+          // 3. Commercial Register validation
+          const crVal = crInput.value.trim();
+          if (!crVal) {
+            crErrorText.textContent = 'رقم السجل التجاري مطلوب ولا يمكن تركه فارغاً.';
+            crError.classList.add('visible');
+            crInput.classList.add('input-error');
+            isValid = false;
+          } else if (!/^\d+$/.test(crVal)) {
+            crErrorText.textContent = 'يجب إدخال أرقام فقط (0–9) بدون أحرف أو رموز.';
+            crError.classList.add('visible');
+            crInput.classList.add('input-error');
+            isValid = false;
+          } else {
+            crError.classList.remove('visible');
+            crInput.classList.remove('input-error');
+          }
+
+          // Download Buttons state
+          downloadPngBtn.disabled = !isValid;
+          downloadSvgBtn.disabled = !isValid;
+          if (isValid) {
+            validationStatus.textContent = 'جاهز للتحميل بجودة كاملة';
+            validationStatus.className = 'status-valid';
+          } else {
+            validationStatus.textContent = 'يرجى تصحيح الحقول المطلوبة لتفعيل التحميل';
+            validationStatus.className = 'status-invalid';
+          }
+
+          return isValid;
+        }
+
+        // --- Stamp SVG Rendering Engine ---
+        function renderStamp() {
+          const shape = state.shape;
+          const color = state.color;
+          const thickness = state.borderThickness;
+          const weight = state.fontWeight;
+          const compName = companyInput.value.trim() || 'اسم الشركة أو المؤسسة';
+          const taxNo = taxInput.value.trim() || '0000000000';
+          const crNo = crInput.value.trim() || '0000000000';
+
+          // Apply selected clarity/ink filter
+          if (state.clarityMode === 'ultra') {
+            stampContentGroup.removeAttribute('filter');
+          } else if (state.clarityMode === 'subtle') {
+            stampContentGroup.setAttribute('filter', 'url(#subtle-ink-filter)');
+          } else if (state.clarityMode === 'vintage') {
+            stampContentGroup.setAttribute('filter', 'url(#vintage-stamp-filter)');
+          }
+
+          // Clear previous SVG contents
+          stampContentGroup.innerHTML = '';
+
+          // Render appropriate geometry
+          if (shape === 'circle') {
+            stampSvg.setAttribute('viewBox', '0 0 500 500');
+            renderCircleStamp(compName, taxNo, crNo, color, thickness, weight);
+          } else if (shape === 'oval') {
+            stampSvg.setAttribute('viewBox', '0 0 600 420');
+            renderOvalStamp(compName, taxNo, crNo, color, thickness, weight);
+          } else if (shape === 'square') {
+            stampSvg.setAttribute('viewBox', '0 0 500 500');
+            renderSquareStamp(compName, taxNo, crNo, color, thickness, weight, 0);
+          } else if (shape === 'rounded-square') {
+            stampSvg.setAttribute('viewBox', '0 0 500 500');
+            renderSquareStamp(compName, taxNo, crNo, color, thickness, weight, 45);
+          } else if (shape === 'rectangle') {
+            stampSvg.setAttribute('viewBox', '0 0 600 400');
+            renderRectangleStamp(compName, taxNo, crNo, color, thickness, weight);
+          }
+        }
+
+        // --- 1. Circle Stamp Renderer (Ultra-HD & Balanced Arcs) ---
+        function renderCircleStamp(compName, taxNo, crNo, color, thickness, weight) {
+          const cx = 250;
+          const cy = 250;
+          const outerR = 226;
+          const innerR = 210;
+          const centerR = 142;
+          const innerThickness = Math.max(1.75, thickness * 0.52);
+
+          const topPathId = 'circle-top-path';
+          const bottomPathId = 'circle-bottom-path';
+
+          // Curved text path radius
+          const textR = 176;
+
+          // Top Arc Path: Sweep clockwise from left to right along the top
+          const topArcPath = `M ${cx - textR} ${cy} A ${textR} ${textR} 0 0 1 ${cx + textR} ${cy}`;
+
+          // Bottom Arc Path: Sweep clockwise from right to left along bottom
+          const bottomArcPath = `M ${cx + textR} ${cy} A ${textR} ${textR} 0 0 1 ${cx - textR} ${cy}`;
+
+          const isAr = hasArabic(compName);
+          const taxLabel = isAr ? 'الرقم الضريبي' : 'TAX';
+          const crLabel = isAr ? 'السجل التجاري' : 'C.R';
+          const bottomText = `${taxLabel}: ${taxNo}  ★  ${crLabel}: ${crNo}`;
+
+          // Dynamic proportional font sizing
+          let topFontSize = 21;
+          if (compName.length > 42) topFontSize = 14.5;
+          else if (compName.length > 32) topFontSize = 16.5;
+          else if (compName.length > 22) topFontSize = 18.5;
+
+          const bottomFontSize = bottomText.length > 38 ? 12.5 : 14.5;
+
+          stampContentGroup.innerHTML = `
+            <defs>
+              <path id="${topPathId}" d="${topArcPath}" fill="none" />
+              <path id="${bottomPathId}" d="${bottomArcPath}" fill="none" />
+            </defs>
+
+            <!-- Outer Solid Ring -->
+            <circle cx="${cx}" cy="${cy}" r="${outerR}" fill="none" stroke="${color}" stroke-width="${thickness}" stroke-linecap="round" />
+
+            <!-- Inner Concentric Ring -->
+            <circle cx="${cx}" cy="${cy}" r="${innerR}" fill="none" stroke="${color}" stroke-width="${innerThickness}" />
+
+            <!-- Decorative Center Dashed Ring -->
+            <circle cx="${cx}" cy="${cy}" r="${centerR}" fill="none" stroke="${color}" stroke-width="1.8" stroke-dasharray="4 3" opacity="0.9" />
+
+            <!-- Decorative Stars at 9 and 3 o'clock -->
+            <text x="${cx - textR - 8}" y="${cy + 5.5}" text-anchor="middle" fill="${color}" font-size="15" class="stamp-text">★</text>
+            <text x="${cx + textR + 8}" y="${cy + 5.5}" text-anchor="middle" fill="${color}" font-size="15" class="stamp-text">★</text>
+
+            <!-- Curved Company Name (Top Arc) -->
+            <text 
+              fill="${color}" 
+              font-size="${topFontSize}" 
+              font-weight="${weight}" 
+              class="stamp-text"
+              letter-spacing="${isAr ? '0.2px' : '1.5px'}"
+              dominant-baseline="central"
+            >
+              <textPath href="#${topPathId}" startOffset="50%" text-anchor="middle">
+                ${escapeXml(compName)}
+              </textPath>
+            </text>
+
+            <!-- Curved Tax & CR Numbers (Bottom Arc) -->
+            <text 
+              fill="${color}" 
+              font-size="${bottomFontSize}" 
+              font-weight="${Math.min(weight, 800)}" 
+              class="stamp-text"
+              letter-spacing="0.8px"
+              dominant-baseline="central"
+            >
+              <textPath href="#${bottomPathId}" startOffset="50%" text-anchor="middle">
+                ${escapeXml(bottomText)}
+              </textPath>
+            </text>
+
+            <!-- Center Emblem Insignia -->
+            <g transform="translate(${cx}, ${cy})">
+              <!-- Central 5-Point Star Emblem -->
+              <polygon points="0,-36 10,-12 36,-12 16,4 23,28 0,14 -23,28 -16,4 -36,-12 -10,-12" fill="${color}" />
+              <!-- Flanking Stars -->
+              <polygon points="-58,-5 -53,6 -41,6 -51,13 -48,24 -58,18 -68,24 -65,13 -75,6 -63,6" fill="${color}" transform="scale(0.55)" opacity="0.85" />
+              <polygon points="58,-5 63,6 75,6 65,13 68,24 58,18 48,24 51,13 41,6 53,6" fill="${color}" transform="scale(0.55)" opacity="0.85" />
+              <!-- Center Official Text Badge -->
+              <text x="0" y="48" text-anchor="middle" fill="${color}" font-size="12" font-weight="800" letter-spacing="2.5px" class="stamp-text">
+                ${isAr ? 'معتمد رسمياً' : 'OFFICIAL SEAL'}
+              </text>
+            </g>
+          `;
+        }
+
+        // --- 2. Oval Stamp Renderer ---
+        function renderOvalStamp(compName, taxNo, crNo, color, thickness, weight) {
+          const cx = 300;
+          const cy = 210;
+          const outerRx = 278;
+          const outerRy = 188;
+          const innerRx = 260;
+          const innerRy = 170;
+          const centerRx = 176;
+          const centerRy = 102;
+          const innerThickness = Math.max(1.75, thickness * 0.52);
+
+          const topPathId = 'oval-top-path';
+          const bottomPathId = 'oval-bottom-path';
+
+          const textRx = 218;
+          const textRy = 138;
+
+          const topArcPath = `M ${cx - textRx} ${cy} A ${textRx} ${textRy} 0 0 1 ${cx + textRx} ${cy}`;
+          const bottomArcPath = `M ${cx + textRx} ${cy} A ${textRx} ${textRy} 0 0 1 ${cx - textRx} ${cy}`;
+
+          const isAr = hasArabic(compName);
+          const taxLabel = isAr ? 'الرقم الضريبي' : 'TAX';
+          const crLabel = isAr ? 'السجل التجاري' : 'C.R';
+          const bottomText = `${taxLabel}: ${taxNo}  ★  ${crLabel}: ${crNo}`;
+
+          let topFontSize = 22;
+          if (compName.length > 42) topFontSize = 15;
+          else if (compName.length > 32) topFontSize = 17;
+          else if (compName.length > 22) topFontSize = 19;
+
+          const bottomFontSize = bottomText.length > 38 ? 13 : 15;
+
+          stampContentGroup.innerHTML = `
+            <defs>
+              <path id="${topPathId}" d="${topArcPath}" fill="none" />
+              <path id="${bottomPathId}" d="${bottomArcPath}" fill="none" />
+            </defs>
+
+            <!-- Outer Solid Oval -->
+            <ellipse cx="${cx}" cy="${cy}" rx="${outerRx}" ry="${outerRy}" fill="none" stroke="${color}" stroke-width="${thickness}" stroke-linecap="round" />
+
+            <!-- Inner Solid Oval -->
+            <ellipse cx="${cx}" cy="${cy}" rx="${innerRx}" ry="${innerRy}" fill="none" stroke="${color}" stroke-width="${innerThickness}" />
+
+            <!-- Center Dashed Oval -->
+            <ellipse cx="${cx}" cy="${cy}" rx="${centerRx}" ry="${centerRy}" fill="none" stroke="${color}" stroke-width="1.8" stroke-dasharray="4 3.5" opacity="0.88" />
+
+            <!-- Flanking Stars -->
+            <text x="${cx - textRx - 8}" y="${cy + 5.5}" text-anchor="middle" fill="${color}" font-size="15" class="stamp-text">★</text>
+            <text x="${cx + textRx + 8}" y="${cy + 5.5}" text-anchor="middle" fill="${color}" font-size="15" class="stamp-text">★</text>
+
+            <!-- Top Arc Company Name -->
+            <text 
+              fill="${color}" 
+              font-size="${topFontSize}" 
+              font-weight="${weight}" 
+              class="stamp-text"
+              letter-spacing="${isAr ? '0.2px' : '1.5px'}"
+              dominant-baseline="central"
+            >
+              <textPath href="#${topPathId}" startOffset="50%" text-anchor="middle">
+                ${escapeXml(compName)}
+              </textPath>
+            </text>
+
+            <!-- Bottom Arc Numbers -->
+            <text 
+              fill="${color}" 
+              font-size="${bottomFontSize}" 
+              font-weight="${Math.min(weight, 800)}" 
+              class="stamp-text"
+              letter-spacing="0.8px"
+              dominant-baseline="central"
+            >
+              <textPath href="#${bottomPathId}" startOffset="50%" text-anchor="middle">
+                ${escapeXml(bottomText)}
+              </textPath>
+            </text>
+
+            <!-- Center Crest -->
+            <g transform="translate(${cx}, ${cy})">
+              <polygon points="0,-28 8,-9 28,-9 12,3 18,22 0,11 -18,22 -12,3 -28,-9 -8,-9" fill="${color}" />
+              <text x="0" y="42" text-anchor="middle" fill="${color}" font-size="12" font-weight="800" letter-spacing="2.5px" class="stamp-text">
+                ${isAr ? 'توثيق رسمي' : 'CERTIFIED SEAL'}
+              </text>
+            </g>
+          `;
+        }
+
+        // --- 3. Square & Rounded Square Stamp Renderer ---
+        function renderSquareStamp(compName, taxNo, crNo, color, thickness, weight, cornerRadius) {
+          const outerSize = 452;
+          const outerX = 24;
+          const outerY = 24;
+          const gap = 14;
+          const innerSize = outerSize - gap * 2;
+          const innerX = outerX + gap;
+          const innerY = outerY + gap;
+          const innerRadius = Math.max(0, cornerRadius - gap * 0.75);
+          const innerThickness = Math.max(1.75, thickness * 0.52);
+
+          const cx = 250;
+          const isAr = hasArabic(compName);
+          const taxLabel = isAr ? 'الرقم الضريبي' : 'TAX NO';
+          const crLabel = isAr ? 'السجل التجاري' : 'C.R. NO';
+
+          let compFontSize = 23;
+          if (compName.length > 36) compFontSize = 16;
+          else if (compName.length > 25) compFontSize = 19;
+
+          stampContentGroup.innerHTML = `
+            <!-- Outer Square / Rounded Square Border -->
+            <rect 
+              x="${outerX}" y="${outerY}" 
+              width="${outerSize}" height="${outerSize}" 
+              rx="${cornerRadius}" ry="${cornerRadius}"
+              fill="none" stroke="${color}" stroke-width="${thickness}" 
+              stroke-linecap="round" stroke-linejoin="round"
+            />
+
+            <!-- Inner Concentric Border -->
+            <rect 
+              x="${innerX}" y="${innerY}" 
+              width="${innerSize}" height="${innerSize}" 
+              rx="${innerRadius}" ry="${innerRadius}"
+              fill="none" stroke="${color}" stroke-width="${innerThickness}" 
+              stroke-linejoin="round"
+            />
+
+            <!-- Top Company Name -->
+            <text 
+              x="${cx}" y="125" 
+              text-anchor="middle" 
+              fill="${color}" 
+              font-size="${compFontSize}" 
+              font-weight="${weight}" 
+              class="stamp-text"
+              letter-spacing="${isAr ? '0.2px' : '1px'}"
+            >
+              ${escapeXml(compName)}
+            </text>
+
+            <!-- Decorative Center Divider with Star -->
+            <line x1="75" y1="168" x2="220" y2="168" stroke="${color}" stroke-width="1.8" />
+            <text x="${cx}" y="174" text-anchor="middle" fill="${color}" font-size="17" class="stamp-text">★</text>
+            <line x1="280" y1="168" x2="425" y2="168" stroke="${color}" stroke-width="1.8" />
+
+            <!-- Stacked Straight Numbers -->
+            <text 
+              x="${cx}" y="235" 
+              text-anchor="middle" 
+              fill="${color}" 
+              font-size="19" 
+              font-weight="${Math.min(weight, 800)}" 
+              class="stamp-text"
+              letter-spacing="0.5px"
+            >
+              ${escapeXml(taxLabel)}: ${escapeXml(taxNo)}
+            </text>
+
+            <text 
+              x="${cx}" y="285" 
+              text-anchor="middle" 
+              fill="${color}" 
+              font-size="19" 
+              font-weight="${Math.min(weight, 800)}" 
+              class="stamp-text"
+              letter-spacing="0.5px"
+            >
+              ${escapeXml(crLabel)}: ${escapeXml(crNo)}
+            </text>
+
+            <!-- Decorative Bottom Element -->
+            <line x1="100" y1="330" x2="220" y2="330" stroke="${color}" stroke-width="1.2" stroke-dasharray="4 3" />
+            <text x="${cx}" y="335" text-anchor="middle" fill="${color}" font-size="14" class="stamp-text">◆</text>
+            <line x1="280" y1="330" x2="400" y2="330" stroke="${color}" stroke-width="1.2" stroke-dasharray="4 3" />
+
+            <text 
+              x="${cx}" y="380" 
+              text-anchor="middle" 
+              fill="${color}" 
+              font-size="13.5" 
+              font-weight="800" 
+              letter-spacing="4px" 
+              class="stamp-text"
+            >
+              ★ OFFICIAL REGISTRATION ★
+            </text>
+          `;
+        }
+
+        // --- 4. Rectangle Stamp Renderer ---
+        function renderRectangleStamp(compName, taxNo, crNo, color, thickness, weight) {
+          const outerW = 552;
+          const outerH = 352;
+          const outerX = 24;
+          const outerY = 24;
+          const gap = 14;
+          const innerW = outerW - gap * 2;
+          const innerH = outerH - gap * 2;
+          const innerX = outerX + gap;
+          const innerY = outerY + gap;
+          const innerThickness = Math.max(1.75, thickness * 0.52);
+
+          const cx = 300;
+          const isAr = hasArabic(compName);
+          const taxLabel = isAr ? 'الرقم الضريبي' : 'TAX NO';
+          const crLabel = isAr ? 'السجل التجاري' : 'C.R. NO';
+
+          let compFontSize = 24;
+          if (compName.length > 40) compFontSize = 17;
+          else if (compName.length > 25) compFontSize = 20;
+
+          stampContentGroup.innerHTML = `
+            <!-- Outer Rectangle Border -->
+            <rect 
+              x="${outerX}" y="${outerY}" 
+              width="${outerW}" height="${outerH}" 
+              fill="none" stroke="${color}" stroke-width="${thickness}" 
+              stroke-linecap="round" stroke-linejoin="round"
+            />
+
+            <!-- Inner Rectangle Border -->
+            <rect 
+              x="${innerX}" y="${innerY}" 
+              width="${innerW}" height="${innerH}" 
+              fill="none" stroke="${color}" stroke-width="${innerThickness}" 
+              stroke-linejoin="round"
+            />
+
+            <!-- Top Company Name -->
+            <text 
+              x="${cx}" y="105" 
+              text-anchor="middle" 
+              fill="${color}" 
+              font-size="${compFontSize}" 
+              font-weight="${weight}" 
+              class="stamp-text"
+              letter-spacing="${isAr ? '0.2px' : '1px'}"
+            >
+              ${escapeXml(compName)}
+            </text>
+
+            <!-- Decorative Center Line with Star -->
+            <line x1="75" y1="145" x2="270" y2="145" stroke="${color}" stroke-width="1.8" />
+            <text x="${cx}" y="151" text-anchor="middle" fill="${color}" font-size="17" class="stamp-text">★</text>
+            <line x1="330" y1="145" x2="525" y2="145" stroke="${color}" stroke-width="1.8" />
+
+            <!-- Stacked Straight Numbers -->
+            <text 
+              x="${cx}" y="202" 
+              text-anchor="middle" 
+              fill="${color}" 
+              font-size="19.5" 
+              font-weight="${Math.min(weight, 800)}" 
+              class="stamp-text"
+              letter-spacing="0.5px"
+            >
+              ${escapeXml(taxLabel)}: ${escapeXml(taxNo)}
+            </text>
+
+            <text 
+              x="${cx}" y="250" 
+              text-anchor="middle" 
+              fill="${color}" 
+              font-size="19.5" 
+              font-weight="${Math.min(weight, 800)}" 
+              class="stamp-text"
+              letter-spacing="0.5px"
+            >
+              ${escapeXml(crLabel)}: ${escapeXml(crNo)}
+            </text>
+
+            <!-- Bottom Sub-Label -->
+            <line x1="120" y1="288" x2="260" y2="288" stroke="${color}" stroke-width="1.2" stroke-dasharray="4 3" />
+            <text x="${cx}" y="293" text-anchor="middle" fill="${color}" font-size="14" class="stamp-text">◆</text>
+            <line x1="340" y1="288" x2="480" y2="288" stroke="${color}" stroke-width="1.2" stroke-dasharray="4 3" />
+
+            <text 
+              x="${cx}" y="328" 
+              text-anchor="middle" 
+              fill="${color}" 
+              font-size="13" 
+              font-weight="800" 
+              letter-spacing="4px" 
+              class="stamp-text"
+            >
+              AUTHORIZED COMPANY STAMP
+            </text>
+          `;
+        }
+
+        // --- Helper: Generate Export Filename ---
+        function getExportFilename(extension) {
+          const compClean = companyInput.value.trim()
+            .replace(/[^\w\u0600-\u06FF\s-]/g, '')
+            .replace(/\s+/g, '_')
+            .slice(0, 30) || 'stamp';
+          return `stamp_${state.shape}_${compClean}_hd.${extension}`;
+        }
+
+        // --- Download Action: Export as SVG ---
+        function downloadSVG() {
+          if (!validateFields()) return;
+
+          const serializer = new XMLSerializer();
+          let source = serializer.serializeToString(stampSvg);
+
+          if (!source.match(/^<svg[^>]+xmlns="http\:\/\/www\.w3\.org\/2000\/svg"/)) {
+            source = source.replace(/^<svg/, '<svg xmlns="http://www.w3.org/2000/svg"');
+          }
+          if (!source.match(/^<svg[^>]+"http\:\/\/www\.w3\.org\/1999\/xlink"/)) {
+            source = source.replace(/^<svg/, '<svg xmlns:xlink="http://www.w3.org/1999/xlink"');
+          }
+
+          source = '<?xml version="1.0" standalone="no"?>\r\n' + source;
+
+          const blob = new Blob([source], { type: 'image/svg+xml;charset=utf-8' });
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = getExportFilename('svg');
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          URL.revokeObjectURL(url);
+        }
+
+        // --- Download Action: Export as Ultra-HD PNG (300+ DPI Canvas Rendering) ---
+        async function downloadPNG() {
+          if (!validateFields()) return;
+
+          // Ensure web fonts are completely loaded in the browser document
+          if (document.fonts && document.fonts.ready) {
+            try {
+              await document.fonts.ready;
+            } catch (err) {
+              console.warn('Font loading wait:', err);
+            }
+          }
+
+          const svgClone = stampSvg.cloneNode(true);
+          svgClone.style.transform = 'none';
+
+          const serializer = new XMLSerializer();
+          let svgString = serializer.serializeToString(svgClone);
+
+          if (!svgString.match(/^<svg[^>]+xmlns="http\:\/\/www\.w3\.org\/2000\/svg"/)) {
+            svgString = svgString.replace(/^<svg/, '<svg xmlns="http://www.w3.org/2000/svg"');
+          }
+
+          const svgBlob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
+          const URLObj = window.URL || window.webkitURL || window;
+          const blobURL = URLObj.createObjectURL(svgBlob);
+
+          const img = new Image();
+          img.onload = function() {
+            const canvas = document.getElementById('export-canvas');
+            // Scale multiplier from user select (Default 4x = 2000px, 6x = 3000px for print quality)
+            const scale = state.exportScale || 4;
+            const viewBox = stampSvg.viewBox.baseVal;
+            const width = Math.round((viewBox.width || 500) * scale);
+            const height = Math.round((viewBox.height || 500) * scale);
+
+            canvas.width = width;
+            canvas.height = height;
+
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, width, height);
+
+            // Maximum image smoothing and subpixel fidelity
+            ctx.imageSmoothingEnabled = true;
+            ctx.imageSmoothingQuality = 'high';
+
+            ctx.drawImage(img, 0, 0, width, height);
+
+            URLObj.revokeObjectURL(blobURL);
+
+            const pngUrl = canvas.toDataURL('image/png');
+            const link = document.createElement('a');
+            link.download = getExportFilename('png');
+            link.href = pngUrl;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+          };
+
+          img.onerror = function() {
+            URLObj.revokeObjectURL(blobURL);
+            console.error('Failed to rasterize SVG to PNG canvas.');
+          };
+
+          img.src = blobURL;
+        }
+
+        // --- Reset Action ---
+        function resetForm() {
+          companyInput.value = '';
+          taxInput.value = '';
+          crInput.value = '';
+
+          setShape('circle');
+          setColor('#0f2b5c');
+
+          borderSlider.value = '4.5';
+          state.borderThickness = 4.5;
+          borderValDisplay.textContent = '4.5px';
+
+          fontWeightSlider.value = '800';
+          state.fontWeight = 800;
+          fontWeightVal.textContent = 'عريض جداً (800)';
+
+          setClarityMode('ultra');
+
+          validateFields();
+          renderStamp();
+        }
+
+        // --- Load Sample Data Action ---
+        function loadSampleData() {
+          companyInput.value = 'شركة النور للتجارة والمقاولات | AL-NOOR TRADING CO.';
+          taxInput.value = '300123456789003';
+          crInput.value = '1010567890';
+          validateFields();
+          renderStamp();
+        }
+
+        // --- Helper: Set Shape ---
+        function setShape(newShape) {
+          state.shape = newShape;
+          shapeButtons.forEach(btn => {
+            if (btn.getAttribute('data-shape') === newShape) {
+              btn.classList.add('active');
+            } else {
+              btn.classList.remove('active');
+            }
+          });
+
+          const shapeNames = {
+            'circle': 'دائري Circle',
+            'oval': 'بيضاوي Oval',
+            'square': 'مربع Square',
+            'rectangle': 'مستطيل Rectangle',
+            'rounded-square': 'منحني Rounded'
+          };
+          shapeIndicator.textContent = shapeNames[newShape] || newShape;
+          renderStamp();
+        }
+
+        // --- Helper: Set Color ---
+        function setColor(newColor) {
+          state.color = newColor;
+          colorSwatches.forEach(btn => {
+            if (btn.getAttribute('data-color') === newColor) {
+              btn.classList.add('active');
+            } else {
+              btn.classList.remove('active');
+            }
+          });
+          customColorPicker.value = newColor;
+          renderStamp();
+        }
+
+        // --- Helper: Set Clarity Mode ---
+        function setClarityMode(mode) {
+          state.clarityMode = mode;
+          clarityTabBtns.forEach(btn => {
+            if (btn.getAttribute('data-mode') === mode) {
+              btn.classList.add('active');
+            } else {
+              btn.classList.remove('active');
+            }
+          });
+          renderStamp();
+        }
+
+        // --- Event Listeners Setup ---
+        function setupEventListeners() {
+          // Real-time Input Validation and Live SVG Updates
+          companyInput.addEventListener('input', () => {
+            validateFields();
+            renderStamp();
+          });
+
+          taxInput.addEventListener('input', () => {
+            validateFields();
+            renderStamp();
+          });
+
+          crInput.addEventListener('input', () => {
+            validateFields();
+            renderStamp();
+          });
+
+          // Shape Buttons
+          shapeButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+              setShape(btn.getAttribute('data-shape'));
+            });
+          });
+
+          // Clarity Mode Tabs
+          clarityTabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+              setClarityMode(btn.getAttribute('data-mode'));
+            });
+          });
+
+          // Color Swatches
+          colorSwatches.forEach(btn => {
+            btn.addEventListener('click', () => {
+              setColor(btn.getAttribute('data-color'));
+            });
+          });
+
+          customColorPicker.addEventListener('input', (e) => {
+            setColor(e.target.value);
+          });
+
+          // Border Slider
+          borderSlider.addEventListener('input', (e) => {
+            const val = parseFloat(e.target.value);
+            state.borderThickness = val;
+            borderValDisplay.textContent = val.toFixed(1) + 'px';
+            renderStamp();
+          });
+
+          // Font Weight Slider
+          fontWeightSlider.addEventListener('input', (e) => {
+            const val = parseInt(e.target.value, 10);
+            state.fontWeight = val;
+            const labels = {
+              600: 'متوسط (600)',
+              700: 'عريض (700)',
+              800: 'عريض جداً (800)',
+              900: 'أقصى سماكة (900)'
+            };
+            fontWeightVal.textContent = labels[val] || val.toString();
+            renderStamp();
+          });
+
+          // Export Resolution Dropdown
+          exportDpiSelect.addEventListener('change', (e) => {
+            const scale = parseFloat(e.target.value) || 4;
+            state.exportScale = scale;
+            const px = Math.round(500 * scale);
+            resolutionIndicator.textContent = scale >= 6 ? `600 DPI · ${px}×${px} px` : `300 DPI · ${px}×${px} px`;
+          });
+
+          // Zoom Level Buttons
+          zoomButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+              zoomButtons.forEach(b => b.classList.remove('active'));
+              btn.classList.add('active');
+              const zoom = parseFloat(btn.getAttribute('data-zoom')) || 1.0;
+              state.zoomLevel = zoom;
+              svgScaleWrapper.style.transform = `scale(${zoom})`;
+            });
+          });
+
+          // Preview Background Modes
+          previewModeButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+              previewModeButtons.forEach(b => b.classList.remove('active'));
+              btn.classList.add('active');
+              const mode = btn.getAttribute('data-bg');
+              stampViewport.className = `stamp-viewport mode-${mode}`;
+            });
+          });
+
+          // Action Buttons
+          downloadPngBtn.addEventListener('click', downloadPNG);
+          downloadSvgBtn.addEventListener('click', downloadSVG);
+          resetBtn.addEventListener('click', resetForm);
+          loadSampleBtn.addEventListener('click', loadSampleData);
+        }
+
+        // --- Initial Boot Sequence ---
+        function init() {
+          companyInput.value = state.companyName;
+          taxInput.value = state.taxNumber;
+          crInput.value = state.crNumber;
+
+          setupEventListeners();
+          validateFields();
+          renderStamp();
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', init);
+        } else {
+          init();
+        }
+      })();
+    </script>
+  </body>
+</html>

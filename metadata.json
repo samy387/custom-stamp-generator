@@ -1,0 +1,8 @@
+{
+  "name": "Custom Stamp Generator",
+  "description": "A responsive single-page tool to design, customize, and export official vector company stamps with live SVG preview, shape options, and Arabic RTL support.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
