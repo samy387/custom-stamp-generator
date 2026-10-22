@@ -1269,15 +1269,11 @@
 
             <!-- Center Emblem Insignia -->
             <g transform="translate(${cx}, ${cy})">
-              <!-- Central 5-Point Star Emblem -->
-              <polygon points="0,-36 10,-12 36,-12 16,4 23,28 0,14 -23,28 -16,4 -36,-12 -10,-12" fill="${color}" />
+              <!-- Central 5-Point Star Emblem (enlarged) -->
+              <polygon points="0,-55 15,-18 55,-18 24,6 35,43 0,21 -35,43 -24,6 -55,-18 -15,-18" fill="${color}" />
               <!-- Flanking Stars -->
-              <polygon points="-58,-5 -53,6 -41,6 -51,13 -48,24 -58,18 -68,24 -65,13 -75,6 -63,6" fill="${color}" transform="scale(0.55)" opacity="0.85" />
-              <polygon points="58,-5 63,6 75,6 65,13 68,24 58,18 48,24 51,13 41,6 53,6" fill="${color}" transform="scale(0.55)" opacity="0.85" />
-              <!-- Center Official Text Badge -->
-              <text x="0" y="48" text-anchor="middle" fill="${color}" font-size="12" font-weight="800" letter-spacing="2.5px" class="stamp-text">
-                ${isAr ? 'معتمد رسمياً' : 'OFFICIAL SEAL'}
-              </text>
+              <polygon points="-58,-5 -53,6 -41,6 -51,13 -48,24 -58,18 -68,24 -65,13 -75,6 -63,6" fill="${color}" transform="scale(0.7)" opacity="0.85" />
+              <polygon points="58,-5 63,6 75,6 65,13 68,24 58,18 48,24 51,13 41,6 53,6" fill="${color}" transform="scale(0.7)" opacity="0.85" />
             </g>
           `;
         }
@@ -1362,12 +1358,9 @@
               </textPath>
             </text>
 
-            <!-- Center Crest -->
+            <!-- Center Crest (enlarged) -->
             <g transform="translate(${cx}, ${cy})">
-              <polygon points="0,-28 8,-9 28,-9 12,3 18,22 0,11 -18,22 -12,3 -28,-9 -8,-9" fill="${color}" />
-              <text x="0" y="42" text-anchor="middle" fill="${color}" font-size="12" font-weight="800" letter-spacing="2.5px" class="stamp-text">
-                ${isAr ? 'توثيق رسمي' : 'CERTIFIED SEAL'}
-              </text>
+              <polygon points="0,-42 12,-14 42,-14 18,5 27,33 0,17 -27,33 -18,5 -42,-14 -12,-14" fill="${color}" />
             </g>
           `;
         }
