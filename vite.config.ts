@@ -4,7 +4,9 @@ import path from 'path';
 import {defineConfig} from 'vite';
 
 export default defineConfig(() => {
+  const isProduction = process.env.NODE_ENV === 'production';
   return {
+    base: isProduction ? '/custom-stamp-generator/' : '/',
     plugins: [react(), tailwindcss()],
     resolve: {
       alias: {
